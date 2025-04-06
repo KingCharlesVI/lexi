@@ -1,0 +1,46 @@
+name: Publish Windows Release
+
+on:
+  push:
+    tags:
+      - 'v*.*.*'
+
+jobs:
+  release:
+    name: Build & Publish Windows App
+    runs-on: windows-latest
+
+    steps:
+      - name: 📥 Checkout repository
+        uses: actions/checkout@v4
+
+      - name: 📦 Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: 🛠 Setup Rust
+        uses: actions-rs/toolchain@v1
+        with:
+          toolchain: stable
+          override: true
+
+      - name: 🧱 Install Tauri CLI
+        run: cargo install tauri-cli
+
+      - name: 🧩 Install dependencies
+        run: npm install
+
+      - name: 🏗 Build Tauri app
+        run: npm run tauri build
+
+      - name: 📤 Upload artifacts to GitHub Releases
+        uses: softprops/action-gh-release@v1
+        with:
+          tag_name: ${{ github.ref_name }}
+          name: "Release ${{ github.ref_name }}"
+          files: |
+            src-tauri/target/release/bundle/nsis/*.exe
+            src-tauri/target/release/bundle/msi/*.msi
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
