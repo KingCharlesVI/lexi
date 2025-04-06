@@ -8,8 +8,8 @@
     "build": "vite build",
     "preview": "vite preview",
     "tauri": "tauri",
-    "tag": "node scripts/tag-from-version.js",
-    "publish": "node scripts/publish.js"
+    "tag": "node scripts/tag-from-version.cjs",
+    "publish": "node scripts/publish.cjs"
   },
   "dependencies": {
     "@tauri-apps/api": "^2.4.1",
