@@ -1,0 +1,253 @@
+:root {
+  --bg: #ffffff;
+  --text: #000000;
+  --heading: #2c3e50;
+  --subheading: #34495e;
+  --muted: #7f8c8d;
+  --input-border: #bdc3c7;
+  --input-border-focus: #3498db;
+  --panel-bg: #f7f9fc;
+  --panel-shadow: rgba(0, 0, 0, 0.1);
+  --status-bg: #edf2f7;
+  --status-text: #4a5568;
+  --hover-bg: rgba(0, 0, 0, 0.05);
+  --modal-bg: rgba(255, 255, 255, 0.05);
+  --modal-border: #bdc3c7;
+  --modal-back: #f7f9fc;
+  --modal-border-input: #444;
+  --button-color: #000;
+}
+
+[data-theme='dark'] {
+  --bg: #121212;
+  --text: #ffffff;
+  --heading: #e0e0e0;
+  --subheading: #bbbbbb;
+  --muted: #aaaaaa;
+  --input-border: #555;
+  --input-border-focus: #3498db;
+  --panel-bg: #1e1e1e;
+  --panel-shadow: rgba(255, 255, 255, 0.05);
+  --status-bg: #2c2c2c;
+  --status-text: #dddddd;
+  --hover-bg: rgba(255, 255, 255, 0.05);
+  --modal-bg: rgba(0, 0, 0, 0.7);
+  --modal-border: rgba(255, 255, 255, 0.15);
+  --modal-back: #333;
+  --modal-border-input: #555;
+  --button-color: #fff;
+}
+
+body {
+  background-color: var(--bg);
+  color: var(--text);
+  font-family: sans-serif;
+}
+
+.app {
+  padding: 2rem;
+}
+
+.container {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 20px;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+}
+
+h1 {
+  text-align: center;
+  margin-bottom: 20px;
+  color: var(--heading);
+}
+
+h2 {
+  margin-top: 20px;
+  margin-bottom: 10px;
+  color: var(--subheading);
+}
+
+.loading {
+  text-align: center;
+  font-size: 18px;
+  margin-top: 40px;
+  color: var(--muted);
+}
+
+.controls {
+  background-color: var(--panel-bg);
+  border-radius: 8px;
+  padding: 20px;
+  margin-bottom: 20px;
+  box-shadow: 0 2px 4px var(--panel-shadow);
+}
+
+.input-container {
+  margin-bottom: 15px;
+}
+
+.input-container label {
+  display: block;
+  margin-bottom: 5px;
+  font-weight: bold;
+  color: var(--subheading);
+}
+
+.input-container input {
+  width: 97%;
+  padding: 10px;
+  border: 2px solid var(--input-border);
+  border-radius: 4px;
+  font-size: 16px;
+  outline: none;
+  transition: border-color 0.2s;
+  background: var(--bg);
+  color: var(--text);
+}
+
+.input-container input:focus {
+  border-color: var(--input-border-focus);
+}
+
+.status {
+  margin-top: 10px;
+  padding: 8px;
+  background-color: var(--status-bg);
+  border-radius: 4px;
+  font-size: 14px;
+  color: var(--status-text);
+}
+
+.words-container {
+  background-color: var(--panel-bg);
+  border-radius: 8px;
+  padding: 20px;
+  box-shadow: 0 2px 4px var(--panel-shadow);
+}
+
+.word-list {
+  list-style: none;
+  padding: 0;
+}
+
+.word-list li {
+  padding: 0.75rem 1rem;
+  border-bottom: 1px solid var(--input-border);
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.word-list li.selected {
+  background-color: #3498db;
+  color: white;
+  border-radius: 4px;
+  transition: background-color 0.3s;
+}
+
+.word-list li:hover {
+  background: var(--hover-bg);
+}
+
+@media (max-width: 600px) {
+  .word-list {
+    grid-template-columns: repeat(auto-fill, minmax(80px, 1fr));
+  }
+}
+
+.settings-button {
+  background: none;
+  border: none;
+  font-size: 1.6rem;
+  padding: 0.5rem;
+  cursor: pointer;
+  color: var(--button-color);
+  transition: transform 0.2s ease;
+}
+
+.settings-button:hover {
+  transform: scale(1.1);
+}
+
+.settings-modal {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: var(--modal-bg);
+  border-radius: 16px;
+  backdrop-filter: blur(12px);
+  border: 1px solid var(--modal-border);
+  padding: 2rem;
+  color: var(--text);
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.2);
+  z-index: 1000;
+  min-width: 300px;
+}
+
+.settings-modal textarea {
+  width: 95%;
+  margin-top: 0.5rem;
+  margin-bottom: 1rem;
+  padding: 0.5rem;
+  background: var(--modal-back);
+  color: var(--text);
+  border: 1px solid var(--modal-border-input);
+  border-radius: 4px;
+}
+
+.settings-modal select {
+  width: 100%;
+  margin-top: 0.5rem;
+  margin-bottom: 1rem;
+  padding: 0.5rem;
+  background: var(--modal-back);
+  color: var(--text);
+  border: 1px solid var(--modal-border-input);
+  border-radius: 4px;
+}
+
+.modal-actions {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 2.5vh;
+}
+
+button {
+  padding: 10px;
+  border: 1px solid var(--modal-border-input);
+  border-radius: 4px;
+  outline: none;
+  transition: border-color 0.2s;
+  background: var(--modal-back);
+  color: var(--text);
+}
+
+button:hover {
+  background: var(--modal-border-input);
+  color: var(--bg);
+  cursor: pointer;
+}
+
+.tab-buttons {
+  display: flex;
+  margin-bottom: 1rem;
+}
+
+.tab-buttons button {
+  flex: 1;
+  padding: 0.5rem;
+  border: none;
+  border-bottom: 2px solid transparent;
+  background: none;
+  cursor: pointer;
+}
+
+.tab-buttons button:hover {
+  color: var(--text);
+  font-weight: bold;
+}
+
+.tab-buttons button.active {
+  border-bottom: 2px solid var(--modal-border-input);
+  font-weight: bold;
+}
