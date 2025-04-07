@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { invoke } from "@tauri-apps/api/core";
+import SettingsModal from './components/SettingsModal';
 import './styles/App.css';
 
 function App() {
@@ -7,6 +8,12 @@ function App() {
   const [matchedWords, setMatchedWords] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [status, setStatus] = useState('Loading dictionary...');
+  const [theme, setTheme] = useState('light');
+  const [showSettings, setShowSettings] = useState(false);
+
+  useEffect(() => {
+    document.documentElement.setAttribute('data-theme', theme);
+  }, [theme]);
 
   // Poll for dictionary load state instead of using events
   useEffect(() => {
@@ -92,7 +99,8 @@ function App() {
 
   return (
     <div className="container">
-      <h1>Word Bomb Helper</h1>
+      <h1>Lexi</h1>
+      <h2>Your friendly neighbourhood lexicographer for Word Bomb!</h2>
       
       {isLoading ? (
         <div className="loading">Loading dictionary...</div>
@@ -128,7 +136,16 @@ function App() {
                 </button>
               ))}
             </div>
+            <button onClick={() => setShowSettings(true)} className="settings-button">⚙️</button>
           </div>
+
+          {showSettings && (
+            <SettingsModal
+              theme={theme}
+              setTheme={setTheme}
+              onClose={() => setShowSettings(false)}
+            />
+          )}
         </>
       )}
     </div>
