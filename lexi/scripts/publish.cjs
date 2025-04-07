@@ -20,7 +20,7 @@ try {
   console.log(`🚀 Pushing tag to GitHub...`);
   execSync(`git push origin ${tag}`, { stdio: 'inherit' });
 
-  console.log(`🎉 Done! GitHub Actions will now build and release your app.`);
+  console.log(`🎉 Done!`);
 } catch (err) {
   console.error('❌ Error during tagging or pushing:', err.message);
   process.exit(1);
