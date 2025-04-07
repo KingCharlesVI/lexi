@@ -24,13 +24,32 @@ try {
   console.log(`🔧 Running Tauri build...`);
   execSync(`npm run tauri build`, { stdio: 'inherit' });
 
-  // Determine expected setup file path
-  const setupPath = path.join(__dirname, 'src-tauri', 'target', 'release', 'bundle', 'msi', `${config.package.productName}_${version}_x64_en-US.msi`);
+  const bundleDir = path.join(__dirname, 'src-tauri', 'target', 'release', 'bundle');
+  const foundFiles = [];
 
-  if (fs.existsSync(setupPath)) {
-    console.log(`📦 Setup binary created at: ${setupPath}`);
+  const searchBundleFiles = (dir) => {
+    if (fs.existsSync(dir)) {
+      const files = fs.readdirSync(dir);
+      for (const file of files) {
+        const filePath = path.join(dir, file);
+        if (fs.statSync(filePath).isFile() && (file.endsWith('.msi') || file.endsWith('.exe'))) {
+          foundFiles.push(filePath);
+        }
+      }
+    }
+  };
+
+  // Look inside bundle root and subfolders
+  searchBundleFiles(bundleDir);
+  ['msi', 'nsis', 'appimage', 'dmg', 'deb'].forEach((sub) =>
+    searchBundleFiles(path.join(bundleDir, sub))
+  );
+
+  if (foundFiles.length > 0) {
+    console.log('📦 Built installer(s):');
+    foundFiles.forEach((f) => console.log(`  → ${f}`));
   } else {
-    console.warn('⚠️ Could not find setup binary automatically. Please check the /src-tauri/target/release/bundle directory.');
+    console.warn('⚠️ No installer files found. Check the /bundle directory manually.');
   }
 
   console.log(`🎉 Done!`);
